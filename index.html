@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Focus UI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --blue:#4cc9ff;
+  --purple:#9b5cff;
+  --bg:#050014;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:'Orbitron', sans-serif;
+  color:white;
+  background:
+    linear-gradient(90deg, rgba(76,201,255,.15) 1px, transparent 1px),
+    linear-gradient(rgba(155,92,255,.15) 1px, transparent 1px),
+    var(--bg);
+  background-size:70px 70px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.container{
+  max-width:900px;
+  width:100%;
+}
+
+/* TITLE */
+.title{
+  font-size:clamp(2.5rem, 7vw, 5rem);
+  letter-spacing:.3em;
+  color:var(--blue);
+  text-shadow:0 0 25px rgba(76,201,255,.7);
+}
+
+/* TIMER */
+.timer{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin:35px 0;
+}
+
+.box{
+  padding:14px 26px;
+  border-radius:30px;
+  border:1px solid var(--purple);
+  box-shadow:0 0 18px rgba(155,92,255,.35);
+}
+
+/* QUOTE */
+.quote{
+  font-size:1.1rem;
+  margin-bottom:35px;
+  color:#d7d3ff;
+  min-height:1.4em;
+  transition:opacity .5s;
+}
+
+/* GOOGLE SEARCH */
+.search input{
+  width:260px;
+  padding:12px;
+  border-radius:30px;
+  border:none;
+  outline:none;
+  font-size:15px;
+}
+
+/* BUTTONS */
+.buttons{
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.btn{
+  padding:12px 28px;
+  border-radius:30px;
+  border:1px solid var(--blue);
+  background:transparent;
+  color:white;
+  cursor:pointer;
+  transition:.3s;
+  text-decoration:none;
+}
+
+.btn:hover{
+  box-shadow:0 0 25px rgba(76,201,255,.7);
+  transform:translateY(-3px);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="title">FOCUS MODE</div>
+
+  <!-- TIMER -->
+  <div class="timer">
+    <div class="box" id="days">0 Days</div>
+    <div class="box" id="hours">0 Hours</div>
+    <div class="box" id="mins">0 Min</div>
+    <div class="box" id="secs">0 Sec</div>
+  </div>
+
+  <!-- QUOTES -->
+  <div class="quote" id="quote">Stay consistent.</div>
+
+  <!-- GOOGLE SEARCH -->
+  <form class="search" action="https://www.google.com/search" method="get" target="_blank">
+    <input type="text" name="q" placeholder="Search Google...">
+  </form>
+
+  <!-- BUTTONS -->
+  <div class="buttons">
+    <a class="btn" href="https://www.youtube.com" target="_blank">YouTube</a>
+    <a class="btn" href="https://open.spotify.com" target="_blank">Spotify</a>
+  </div>
+
+</div>
+
+<script>
+/* ===== COUNTDOWN TO 23 FEB ===== */
+const target = new Date("2026-02-23T00:00:00");
+
+function updateTimer(){
+  const now = new Date();
+  const diff = target - now;
+
+  if(diff <= 0){
+    document.querySelector(".timer").innerHTML = "🔥 TIME REACHED";
+    return;
+  }
+
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff / (1000*60*60)) % 24);
+  const m = Math.floor((diff / (1000*60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+
+  days.innerText = d + " Days";
+  hours.innerText = h + " Hours";
+  mins.innerText = m + " Min";
+  secs.innerText = s + " Sec";
+}
+setInterval(updateTimer,1000);
+updateTimer();
+
+/* ===== QUOTES (ADD YOUR OWN) ===== */
+const quotes = [
+  "Discipline beats motivation.",
+  "Prove them wrong.",
+  "No zero days.",
+  "Focus now, relax later.",
+  "With Great Power Comes Great Responsibility",
+  "There Is No Turning Back",
+  "Remember Who You Are..",
+  "Stop Making Excuses",
+ "Great Things Never Comes From Comfort Zone",
+  "You started for a reason."
+];
+
+let i = 0;
+setInterval(()=>{
+  const q = document.getElementById("quote");
+  q.style.opacity = 0;
+  setTimeout(()=>{
+    q.innerText = quotes[i];
+    q.style.opacity = 1;
+    i = (i + 1) % quotes.length;
+  },400);
+},5000);
+</script>
+
+</body>
+</html>
