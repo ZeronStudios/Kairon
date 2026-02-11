@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root{
@@ -14,292 +13,311 @@
   --purple:#9b5cff;
   --bg:#050014;
 }
+
 *{box-sizing:border-box}
+
 body{
   margin:0;
   min-height:100vh;
   font-family:'Orbitron',sans-serif;
   color:white;
   background:
-    linear-gradient(90deg, rgba(76,201,255,.15) 1px, transparent 1px),
-    linear-gradient(rgba(155,92,255,.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,201,255,.12) 1px, transparent 1px),
+    linear-gradient(rgba(155,92,255,.12) 1px, transparent 1px),
     var(--bg);
-  background-size:70px 70px;
-  display:flex;
-  justify-content:center;
+  background-size:80px 80px;
 }
-.container{
-  max-width:900px;
+
+/* LAYOUT */
+.app{
+  display:grid;
+  grid-template-columns:80px 1fr 260px;
+  gap:20px;
+  padding:20px;
+}
+
+/* LEVEL BAR */
+.level-bar{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+}
+
+.level-track{
+  height:300px;
+  width:14px;
+  background:#111;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.level-fill{
   width:100%;
-  padding:40px 18px 120px;
+  height:3%;
+  background:linear-gradient(var(--blue),var(--purple));
+}
+
+.level-text{
+  font-size:12px;
   text-align:center;
 }
 
-/* TITLE */
+.chart-toggle{
+  cursor:pointer;
+  font-size:20px;
+}
+
+/* MAIN */
+.main{
+  text-align:center;
+}
+
 .title{
-  font-size:clamp(2.5rem,7vw,5rem);
-  letter-spacing:.3em;
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  letter-spacing:.25em;
   color:var(--blue);
-  text-shadow:0 0 25px rgba(76,201,255,.7);
+  text-shadow:0 0 25px rgba(76,201,255,.6);
 }
 
 /* TIMER */
 .timer{
   display:flex;
   justify-content:center;
-  gap:20px;
-  margin:35px 0;
-}
-.box{
-  padding:14px 26px;
-  border-radius:30px;
-  border:1px solid var(--purple);
-  box-shadow:0 0 18px rgba(155,92,255,.35);
+  gap:15px;
+  margin:30px 0;
 }
 
-/* LEVEL + GRAPH TOGGLE */
-.level-row{
+.box{
+  padding:14px 22px;
+  border-radius:25px;
+  border:1px solid var(--purple);
+  box-shadow:0 0 15px rgba(155,92,255,.3);
+}
+
+/* TARGET DATE */
+.target{
+  margin-bottom:20px;
+}
+.target label{
+  display:block;
+  margin-bottom:6px;
+  opacity:.8;
+}
+.target input{
+  padding:8px 14px;
+  border-radius:20px;
+  border:none;
+}
+
+/* QUOTE */
+.quote{
+  min-height:2em;
+  opacity:.9;
+  transition:.4s;
+}
+
+/* SEARCH */
+.search input{
+  width:290px;
+  padding:14px;
+  border-radius:30px;
+  border:none;
+  font-size:16px;
+}
+
+/* BUTTONS */
+.buttons{
+  margin-top:25px;
   display:flex;
   justify-content:center;
-  align-items:center;
-  gap:16px;
-  margin-top:25px;
-}
-.level{
-  color:#ffda79;
-}
-.graph-btn{
-  padding:6px 14px;
-  border-radius:20px;
-  border:1px solid var(--blue);
-  background:transparent;
-  color:white;
-  cursor:pointer;
+  gap:15px;
 }
 
-/* TARGET */
-.target-label{
-  margin-top:30px;
-  font-size:.75rem;
-  letter-spacing:.35em;
-  color:#cfd9ff;
-}
-#targetDate{
-  margin-top:10px;
+.btn{
   padding:12px 26px;
   border-radius:30px;
   border:1px solid var(--blue);
   background:transparent;
   color:white;
-  font-family:'Orbitron',sans-serif;
+  cursor:pointer;
+  text-decoration:none;
 }
-#targetDate::-webkit-calendar-picker-indicator{filter:invert(1)}
 
 /* STREAK */
 .streak{
   margin-top:20px;
-  color:#ffda79;
 }
 
-/* PROGRESS BAR */
 .progress{
-  margin:20px auto;
-  max-width:420px;
-  height:12px;
-  background:#1b1435;
-  border-radius:20px;
+  height:10px;
+  background:#111;
+  border-radius:10px;
   overflow:hidden;
 }
-.progress span{
-  display:block;
+.progress div{
   height:100%;
-  width:0%;
-  background:linear-gradient(90deg,var(--blue),var(--purple));
+  width:30%;
+  background:var(--blue);
 }
 
-/* QUOTE */
-.quote{
-  font-size:1.1rem;
-  margin:35px auto;
-  color:#d7d3ff;
-  min-height:1.4em;
+/* ACHIEVEMENTS */
+.achievements{
+  margin-top:15px;
+  font-size:12px;
 }
 
-/* DAYS */
-.days{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-  gap:18px;
-  margin-top:40px;
-}
-.day{
-  padding:16px;
-  border-radius:18px;
-  border:1px solid var(--purple);
-  box-shadow:0 0 18px rgba(155,92,255,.35);
-  cursor:pointer;
+/* RIGHT */
+.right{
   display:flex;
-  justify-content:space-between;
-}
-.day.done{
-  opacity:.45;
-  text-decoration:line-through;
-}
-.day.locked{
-  opacity:.25;
-  cursor:not-allowed;
+  flex-direction:column;
+  gap:20px;
 }
 
-/* CHART */
-.chart-wrap{
-  max-width:500px;
-  margin:30px auto;
-  display:none;
+/* POMODORO */
+.pomo{
+  border:1px solid var(--purple);
+  border-radius:20px;
+  padding:15px;
+  text-align:center;
+}
+
+audio{
+  width:100%;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .app{
+    grid-template-columns:1fr;
+  }
+  .level-bar{flex-direction:row; justify-content:center;}
+  .level-track{height:14px;width:200px;}
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<div class="title">FOCUS MODE</div>
+<div class="app">
 
-<div class="timer">
-  <div class="box" id="days">0 Days</div>
-  <div class="box" id="hours">0 Hours</div>
-  <div class="box" id="mins">0 Min</div>
-  <div class="box" id="secs">0 Sec</div>
+<!-- LEVEL -->
+<div class="level-bar">
+  <div class="chart-toggle">📊</div>
+  <div class="level-track">
+    <div class="level-fill" id="levelFill"></div>
+  </div>
+  <div class="level-text" id="levelText">Lv 1 · Newbie</div>
 </div>
 
-<div class="level-row">
-  <div class="level" id="level">Level 1 · Newbie</div>
-  <button class="graph-btn" onclick="toggleGraph()">📊</button>
+<!-- MAIN -->
+<div class="main">
+  <div class="title">FOCUS MODE</div>
+
+  <div class="target">
+    <label>Set your target date</label>
+    <input type="date" id="datePicker">
+  </div>
+
+  <div class="timer">
+    <div class="box" id="days">0D</div>
+    <div class="box" id="hours">0H</div>
+    <div class="box" id="mins">0M</div>
+    <div class="box" id="secs">0S</div>
+  </div>
+
+  <div class="quote" id="quote"></div>
+
+  <form class="search" action="https://www.google.com/search" method="get" target="_blank">
+    <input name="q" placeholder="Search Google...">
+  </form>
+
+  <div class="buttons">
+    <a class="btn" href="https://youtube.com" target="_blank">YouTube</a>
+    <a class="btn" href="https://open.spotify.com" target="_blank">Spotify</a>
+  </div>
+
+  <div class="streak">
+    🔥 Streak: <span id="streak">3</span> days
+    <div class="progress"><div id="progressBar"></div></div>
+  </div>
+
+  <div class="achievements" id="achievements"></div>
 </div>
 
-<div class="target-label">SET TARGET</div>
-<input type="date" id="targetDate">
+<!-- RIGHT -->
+<div class="right">
 
-<div class="streak" id="streak">🔥 Streak: 0 days</div>
+  <div class="pomo">
+    <h3>Pomodoro</h3>
+    <div id="pomoTime">25:00</div>
+    <button onclick="startPomo()">Start</button>
+  </div>
 
-<div class="progress"><span id="bar"></span></div>
+  <audio id="bgm" controls>
+    <source src="ncs.mp3" type="audio/mpeg">
+  </audio>
 
-<div class="quote" id="quote"></div>
-
-<div class="chart-wrap" id="chartWrap">
-  <canvas id="chart"></canvas>
 </div>
-
-<div class="days" id="daysList"></div>
 
 </div>
 
 <script>
 /* ===== DATA ===== */
-let completed = JSON.parse(localStorage.getItem("completedDays")) || [];
+let targetDate = localStorage.getItem("targetDate") || "2026-02-23";
+let streak = Number(localStorage.getItem("streak")) || 3;
 
-/* ===== TARGET ===== */
-const input=document.getElementById("targetDate");
-let target=new Date(localStorage.getItem("targetDate")||"2026-02-23");
-input.value=target.toISOString().split("T")[0];
-input.onchange=()=>{localStorage.setItem("targetDate",input.value);target=new Date(input.value)};
+/* DATE */
+datePicker.value = targetDate;
+datePicker.onchange = e=>{
+  targetDate = e.target.value;
+  localStorage.setItem("targetDate",targetDate);
+};
 
-/* ===== TIMER ===== */
-setInterval(()=>{
- const diff=target-new Date();
- if(diff<=0)return;
- days.innerText=Math.floor(diff/86400000)+" Days";
- hours.innerText=Math.floor(diff/3600000)%24+" Hours";
- mins.innerText=Math.floor(diff/60000)%60+" Min";
- secs.innerText=Math.floor(diff/1000)%60+" Sec";
-},1000);
-
-/* ===== STATS ===== */
-function updateStats(){
- const streak=completed.length;
- streakEl.innerText="🔥 Streak: "+streak+" days";
- bar.style.width=Math.min(100,streak)+"%";
-
- const lvl=Math.min(100,streak+1);
- let title="Newbie";
- if(lvl>10)title="Learner";
- if(lvl>25)title="Grinder";
- if(lvl>50)title="Warrior";
- if(lvl>75)title="Master";
- if(lvl===100)title="Legend 👑";
- level.innerText=`Level ${lvl} · ${title}`;
-
- localStorage.setItem("completedDays",JSON.stringify(completed));
+/* TIMER */
+function tick(){
+  const diff = new Date(targetDate) - new Date();
+  if(diff<=0) return;
+  days.textContent = Math.floor(diff/86400000)+"D";
+  hours.textContent = Math.floor(diff/3600000)%24+"H";
+  mins.textContent = Math.floor(diff/60000)%60+"M";
+  secs.textContent = Math.floor(diff/1000)%60+"S";
 }
+setInterval(tick,1000); tick();
 
-/* ===== DAY LOGIC (FIXED) ===== */
-function renderDays(){
- daysList.innerHTML="";
- let today = 1;
- while(completed.includes(today)) today++;
-
- for(let i=1;i<=today+2;i++){
-  const done = completed.includes(i);
-  const future = i > today;
-  const d=document.createElement("div");
-
-  d.className="day"+(done?" done":"")+(future?" locked":"");
-  d.innerHTML=`Day ${i} <span>${done?"✖":"✔"}</span>`;
-
-  d.onclick=()=>{
-    if(future) return;
-    if(done){
-      completed = completed.filter(x=>x!==i);
-    }else{
-      if(i!==today) return;
-      completed.push(i);
-    }
-    updateStats();
-    renderDays();
-    updateChart();
-  };
-  daysList.appendChild(d);
- }
-}
-
-/* ===== QUOTES ===== */
+/* QUOTES */
 const quotes=[
 "Strength doesn’t come from what you can do. It comes from overcoming the things you once thought you couldn’t.",
 "Discipline beats motivation.",
+"Prove them wrong.",
 "No zero days.",
-"Prove them wrong."
+"You started for a reason."
 ];
 let qi=0;
-quote.innerText=quotes[0];
-setInterval(()=>{qi=(qi+1)%quotes.length;quote.innerText=quotes[qi]},5000);
+setInterval(()=>{
+  quote.style.opacity=0;
+  setTimeout(()=>{
+    quote.textContent=quotes[qi];
+    quote.style.opacity=1;
+    qi=(qi+1)%quotes.length;
+  },400);
+},5000);
 
-/* ===== GRAPH ===== */
-let chart;
-function updateChart(){
- const ctx=document.getElementById("chart");
- if(chart) chart.destroy();
- chart=new Chart(ctx,{
-  type:"line",
-  data:{
-   labels:completed.map(d=>"Day "+d),
-   datasets:[{
-    data:completed.map((_,i)=>i+1),
-    borderColor:"#4cc9ff",
-    tension:.3
-   }]
-  },
-  options:{plugins:{legend:{display:false}}}
- });
-}
-function toggleGraph(){
- const w=chartWrap;
- w.style.display=w.style.display==="block"?"none":"block";
- updateChart();
-}
+/* STREAK + LEVEL */
+streakEl.textContent=streak;
+progressBar.style.width=Math.min(streak,30)*3+"%";
 
-/* INIT */
-const streakEl=document.getElementById("streak");
-updateStats();
-renderDays();
+const level=Math.min(100,Math.floor(streak/3)+1);
+levelFill.style.height=level+"%";
+levelText.textContent=`Lv ${level} · ${level<10?"Newbie":level<50?"Focused":"Legend"}`;
+
+achievements.textContent =
+streak>=7?"🏅 7-Day Consistency Unlocked":
+streak>=3?"🥉 3-Day Streak":"";
+
+/* AUDIO */
+const bgm=document.getElementById("bgm");
+bgm.volume=0.2;
 </script>
 
 </body>
