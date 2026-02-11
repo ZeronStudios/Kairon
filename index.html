@@ -22,255 +22,297 @@ body{
   font-family:'Orbitron', sans-serif;
   color:white;
   background:
-    linear-gradient(90deg, rgba(76,201,255,.14) 1px, transparent 1px),
-    linear-gradient(rgba(155,92,255,.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,201,255,.15) 1px, transparent 1px),
+    linear-gradient(rgba(155,92,255,.15) 1px, transparent 1px),
     var(--bg);
   background-size:70px 70px;
   display:flex;
   justify-content:center;
-  align-items:center;
-  text-align:center;
 }
 
-/* CONTAINER */
 .container{
+  max-width:1000px;
   width:100%;
-  max-width:1100px;
-  padding:40px 20px 50px;
+  padding:40px 18px 140px;
+  text-align:center;
+  animation:splash 1s ease;
+}
+
+@keyframes splash{
+  from{opacity:0; transform:translateY(20px)}
+  to{opacity:1; transform:none}
 }
 
 /* TITLE */
 .title{
-  font-size:clamp(3rem, 6vw, 5.2rem);
-  letter-spacing:.32em;
+  font-size:clamp(2.6rem, 7vw, 5.2rem);
+  letter-spacing:.35em;
   color:var(--blue);
-  text-shadow:
-    0 0 18px rgba(76,201,255,.8),
-    0 0 50px rgba(76,201,255,.4);
-  margin-bottom:30px;
+  text-shadow:0 0 30px rgba(76,201,255,.8);
+  margin-bottom:40px;
 }
 
 /* TIMER */
 .timer{
   display:flex;
   justify-content:center;
-  gap:26px;
-  margin-bottom:30px;
+  gap:16px;
+  flex-wrap:wrap;
 }
 
 .box{
-  padding:18px 34px;
-  border-radius:30px;
+  padding:14px 28px;
+  border-radius:40px;
   border:1px solid var(--purple);
-  box-shadow:0 0 22px rgba(155,92,255,.35);
-  font-size:1rem;
-  min-width:150px;
-  animation:pulse 3s ease-in-out infinite;
+  box-shadow:0 0 20px rgba(155,92,255,.4);
+  min-width:130px;
 }
 
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 18px rgba(155,92,255,.25)}
-  50%{box-shadow:0 0 28px rgba(155,92,255,.6)}
+/* TARGET */
+.target-label{
+  margin-top:30px;
+  font-size:.8rem;
+  letter-spacing:.2em;
+  color:#8fdcff;
 }
 
-/* TARGET DATE */
-.date-set{
-  margin-bottom:26px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
-}
-
-.date-label{
-  font-size:.75rem;
-  letter-spacing:.35em;
-  color:#cfd9ff;
-  opacity:.8;
-}
-
-.date-set input{
-  padding:13px 44px 13px 22px;
-  border-radius:30px;
-  border:1px solid var(--blue);
+#targetDate{
+  margin-top:10px;
   background:transparent;
   color:white;
+  border:1px solid var(--blue);
+  padding:12px 22px;
+  border-radius:30px;
   font-family:'Orbitron', sans-serif;
-  text-align:center;
-  background-image:
-    linear-gradient(transparent,transparent),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%234cc9ff' viewBox='0 0 24 24'%3E%3Cpath d='M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 18H5V9h14v11z'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:right 14px center;
-  background-size:18px;
+  outline:none;
+}
+#targetDate::-webkit-calendar-picker-indicator{
+  filter:invert(1);
+}
+
+/* STREAK */
+.streak{
+  margin-top:25px;
+  font-size:1rem;
+  color:#ffda79;
+  text-shadow:0 0 15px rgba(255,218,121,.6);
+}
+
+/* PROGRESS BAR */
+.progress-wrap{
+  margin:25px auto;
+  max-width:420px;
+}
+.progress{
+  height:12px;
+  background:#1b1435;
+  border-radius:20px;
+  overflow:hidden;
+}
+.progress span{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  transition:.6s;
 }
 
 /* QUOTE */
 .quote{
-  font-size:1.15rem;
-  color:#e0dcff;
-  margin-bottom:34px;
-  min-height:1.6em;
-  transition:opacity .4s;
+  margin:35px auto;
+  max-width:760px;
+  font-size:1.05rem;
+  color:#d7d3ff;
+  min-height:2.4em;
 }
 
-/* GOOGLE SEARCH */
+/* SEARCH */
 .search input{
-  width:330px;                 /* +10% */
-  padding:15px 20px;
-  border-radius:30px;
+  width:320px;
+  padding:15px;
+  border-radius:35px;
   border:none;
-  outline:none;
   font-size:16px;
-  margin-bottom:30px;
-  caret-color:var(--blue);
-  box-shadow:0 0 0 transparent;
-}
-
-.search input:focus{
-  box-shadow:0 0 25px rgba(76,201,255,.6);
 }
 
 /* BUTTONS */
 .buttons{
+  margin-top:25px;
   display:flex;
   justify-content:center;
-  gap:26px;
-  margin-bottom:28px;
+  gap:20px;
+  flex-wrap:wrap;
 }
 
 .btn{
   padding:13px 34px;
-  border-radius:28px;
+  border-radius:30px;
   border:1px solid var(--blue);
   background:transparent;
   color:white;
-  text-decoration:none;
+  cursor:pointer;
   transition:.3s;
+  text-decoration:none;
 }
-
 .btn:hover{
-  box-shadow:0 0 28px rgba(76,201,255,.75);
+  box-shadow:0 0 25px rgba(76,201,255,.7);
   transform:translateY(-3px);
 }
 
-/* AUDIO */
-audio{
-  width:320px;
+/* DAY TRACKER */
+.day-section{
+  margin-top:60px;
+  text-align:left;
 }
 
-/* MOBILE */
-@media(max-width:720px){
-  .timer{flex-wrap:wrap;gap:14px}
-  .box{min-width:45%;padding:14px}
+.day-title{
+  text-align:center;
+  letter-spacing:.25em;
+  margin-bottom:25px;
+  color:#9bdeff;
+}
+
+.days{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+  gap:18px;
+}
+
+.day{
+  padding:16px;
+  border-radius:18px;
+  border:1px solid var(--purple);
+  box-shadow:0 0 18px rgba(155,92,255,.35);
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+}
+
+.day.done{
+  opacity:.45;
+  text-decoration:line-through;
+}
+
+/* MOBILE EXTRA */
+@media(max-width:600px){
+  body{background-size:45px 45px}
   .search input{width:100%}
-  audio{width:100%}
+  .box{min-width:110px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-  <div class="title">FOCUS MODE</div>
+<div class="title">FOCUS MODE</div>
 
-  <div class="timer">
-    <div class="box" id="days">0 Days</div>
-    <div class="box" id="hours">0 Hours</div>
-    <div class="box" id="mins">0 Minutes</div>
-    <div class="box" id="secs">0 Seconds</div>
-  </div>
+<div class="timer">
+  <div class="box" id="days">0 Days</div>
+  <div class="box" id="hours">0 Hours</div>
+  <div class="box" id="mins">0 Min</div>
+  <div class="box" id="secs">0 Sec</div>
+</div>
 
-  <div class="date-set">
-    <div class="date-label">SET TARGET</div>
-    <input type="date" id="datePicker">
-  </div>
+<div class="target-label">🎯 SET YOUR TARGET</div>
+<input type="date" id="targetDate">
 
-  <div class="quote" id="quote">Stay consistent.</div>
+<div class="streak" id="streak">🔥 Streak: 0 days</div>
 
-  <form class="search" action="https://www.google.com/search" method="get" target="_blank">
-    <input type="text" name="q" id="searchBox" placeholder="Search Google...">
-  </form>
+<div class="progress-wrap">
+  <div class="progress"><span id="bar"></span></div>
+</div>
 
-  <div class="buttons">
-    <a class="btn" href="https://www.youtube.com" target="_blank">YouTube</a>
-    <a class="btn" href="https://open.spotify.com" target="_blank">Spotify</a>
-  </div>
+<div class="quote" id="quote"></div>
 
-  <audio id="bgAudio" src="ncs.mp3" controls></audio>
+<form class="search" action="https://www.google.com/search" method="get" target="_blank">
+  <input type="text" name="q" placeholder="Search Google...">
+</form>
+
+<div class="buttons">
+  <a class="btn" href="https://www.youtube.com" target="_blank">YouTube</a>
+  <a class="btn" href="https://open.spotify.com" target="_blank">Spotify</a>
+</div>
+
+<div class="day-section">
+  <div class="day-title">DAY PROGRESS</div>
+  <div class="days" id="daysList"></div>
+</div>
 
 </div>
 
 <script>
 /* TARGET DATE */
-let target = new Date("2026-02-23T00:00:00");
-datePicker.valueAsDate = target;
-datePicker.onchange = () => target = new Date(datePicker.value);
+const input=document.getElementById("targetDate");
+let saved=localStorage.getItem("targetDate");
+let target=saved?new Date(saved):new Date("2026-02-23T00:00:00");
+input.value=target.toISOString().split("T")[0];
+input.onchange=()=>{localStorage.setItem("targetDate",input.value);target=new Date(input.value)};
 
 /* TIMER */
 function updateTimer(){
-  const now = new Date();
-  const diff = target - now;
-  if(diff <= 0){
-    document.querySelector(".timer").innerHTML="🔥 TARGET REACHED";
-    return;
-  }
-  days.innerText = Math.floor(diff/86400000)+" Days";
-  hours.innerText = Math.floor(diff/3600000%24)+" Hours";
-  mins.innerText = Math.floor(diff/60000%60)+" Minutes";
-  secs.innerText = Math.floor(diff/1000%60)+" Seconds";
+ const diff=target-new Date();
+ if(diff<=0)return;
+ days.innerText=Math.floor(diff/86400000)+" Days";
+ hours.innerText=Math.floor(diff/3600000)%24+" Hours";
+ mins.innerText=Math.floor(diff/60000)%60+" Min";
+ secs.innerText=Math.floor(diff/1000)%60+" Sec";
 }
-setInterval(updateTimer,1000);
-updateTimer();
+setInterval(updateTimer,1000);updateTimer();
 
 /* QUOTES */
 const quotes=[
-  "Discipline beats motivation.",
-  "Prove them wrong.",
-  "No zero days.",
-  "Focus now, relax later.",
-  "With Great Power Comes Great Responsibility",
-  "There Is No Turning Back",
-  "Remember Who You Are.",
-  "Stop Making Excuses.",
-  "Great Things Never Comes From Comfort Zone",
-  "You started for a reason."
+"Strength doesn’t come from what you can do. It comes from overcoming the things you once thought you couldn’t.",
+"Discipline beats motivation.",
+"No zero days.",
+"Prove them wrong.",
+"You didn’t come this far to stop."
 ];
-let i=0;
-setInterval(()=>{
-  quote.style.opacity=0;
-  setTimeout(()=>{
-    quote.innerText=quotes[i];
-    quote.style.opacity=1;
-    i=(i+1)%quotes.length;
-  },350);
-},5000);
+let qi=0;
+setInterval(()=>{quote.style.opacity=0;setTimeout(()=>{quote.innerText=quotes[qi];quote.style.opacity=1;qi=(qi+1)%quotes.length},400)},5000);
+quote.innerText=quotes[0];
 
-/* AUDIO */
+/* DAY + STREAK */
+const daysList=document.getElementById("daysList");
+let currentDay=Number(localStorage.getItem("currentDay"))||1;
+let streak=Number(localStorage.getItem("streak"))||0;
+let last=localStorage.getItem("lastDay");
 
-
-const audio = document.getElementById("bgAudio");
-audio.volume = 0.2;
-
-/* START AFTER FIRST INTERACTION */
-function startAudio(){
-  audio.play().catch(()=>{});
-  document.removeEventListener("click", startAudio);
-  document.removeEventListener("keydown", startAudio);
+function updateStreak(){
+ const today=new Date().toDateString();
+ if(last!==today){streak++;localStorage.setItem("streak",streak);localStorage.setItem("lastDay",today)}
+ streakEl.innerText="🔥 Streak: "+streak+" days";
 }
+const streakEl=document.getElementById("streak");
+streakEl.innerText="🔥 Streak: "+streak+" days";
 
-document.addEventListener("click", startAudio);
-document.addEventListener("keydown", startAudio);
+/* PROGRESS BAR */
+function updateBar(){
+ const start=new Date("2026-01-01");
+ const total=target-start;
+ const done=new Date()-start;
+ bar.style.width=Math.min(100,(done/total)*100)+"%";
+}
+updateBar();
 
-
-/* KEYBOARD SHORTCUT */
-document.addEventListener("keydown",(e)=>{
-  if(e.key==="/"){
-    e.preventDefault();
-    document.getElementById("searchBox").focus();
-  }
-});
+function renderDays(){
+ daysList.innerHTML="";
+ for(let i=1;i<=currentDay;i++){
+  const d=document.createElement("div");
+  d.className="day"+(i<currentDay?" done":"");
+  d.innerHTML=`Day ${i} <span>✔</span>`;
+  d.onclick=()=>{
+    if(i===currentDay){
+      currentDay++;
+      localStorage.setItem("currentDay",currentDay);
+      updateStreak();
+      renderDays();
+    }
+  };
+  daysList.appendChild(d);
+ }
+}
+renderDays();
 </script>
 
 </body>
