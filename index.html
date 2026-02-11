@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Focus Mode</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
@@ -12,10 +13,13 @@
   --purple:#9b5cff;
   --bg:#050014;
 }
+
 *{box-sizing:border-box}
+
 body{
   margin:0;
-  font-family:Orbitron,sans-serif;
+  min-height:100vh;
+  font-family:'Orbitron', sans-serif;
   color:white;
   background:
     linear-gradient(90deg, rgba(76,201,255,.12) 1px, transparent 1px),
@@ -24,66 +28,83 @@ body{
   background-size:80px 80px;
 }
 
-/* LAYOUT */
+/* ===== LAYOUT ===== */
 .app{
   display:grid;
-  grid-template-columns:90px 1fr 260px;
+  grid-template-columns:80px 1fr 220px;
   gap:20px;
   padding:20px;
 }
 
-/* LEVEL */
+/* ===== LEVEL BAR ===== */
 .level{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:12px;
+  gap:10px;
 }
+
 .level-bar{
   height:260px;
-  width:14px;
-  background:#111;
+  width:12px;
+  background:#0b0b18;
   border-radius:10px;
   overflow:hidden;
 }
+
 .level-fill{
-  height:3%;
   width:100%;
+  height:4%;
   background:linear-gradient(var(--blue),var(--purple));
-  transition:.4s;
-}
-.level-icons{
-  display:flex;
-  gap:10px;
-  font-size:20px;
-  cursor:pointer;
 }
 
-/* MAIN */
-.main{text-align:center}
+.level-text{
+  font-size:12px;
+  opacity:.8;
+}
+
+/* ===== MAIN ===== */
+.main{
+  text-align:center;
+}
+
 .title{
   font-size:clamp(2.5rem,6vw,4.5rem);
   letter-spacing:.3em;
   color:var(--blue);
   text-shadow:0 0 25px rgba(76,201,255,.6);
 }
+
+/* TIMER */
 .timer{
   display:flex;
   justify-content:center;
-  gap:15px;
+  gap:14px;
   margin:25px 0;
 }
+
 .box{
   padding:12px 22px;
   border-radius:25px;
   border:1px solid var(--purple);
+  box-shadow:0 0 14px rgba(155,92,255,.3);
+}
+
+/* TARGET DATE */
+.target{
+  margin-bottom:18px;
 }
 .target input{
   padding:8px 14px;
   border-radius:20px;
   border:none;
 }
-.quote{opacity:.85;margin:15px 0}
+
+/* QUOTE */
+.quote{
+  margin:14px 0;
+  opacity:.85;
+}
 
 /* SEARCH */
 .search input{
@@ -95,7 +116,13 @@ body{
 }
 
 /* BUTTONS */
-.buttons{margin:20px;display:flex;gap:15px;justify-content:center}
+.buttons{
+  margin:20px 0;
+  display:flex;
+  justify-content:center;
+  gap:16px;
+}
+
 .btn{
   padding:12px 26px;
   border-radius:30px;
@@ -105,66 +132,85 @@ body{
   cursor:pointer;
 }
 
-/* TASKS */
-.tasks{
-  margin:25px auto;
-  max-width:400px;
-  text-align:left;
-}
-.tasks input{
-  width:100%;
-  padding:10px;
-  border-radius:20px;
-  border:none;
-}
-.task{
-  display:flex;
-  gap:10px;
-  margin-top:8px;
-  font-size:14px;
+/* STREAK */
+.streak{
+  margin-top:18px;
+  opacity:.9;
 }
 
-/* RIGHT */
+/* ===== RIGHT SIDE ===== */
 .right{
   display:flex;
   flex-direction:column;
-  gap:20px;
+  gap:16px;
 }
+
+/* SMALL POMODORO (ADJUSTED ONLY) */
 .pomo{
   border:1px solid var(--purple);
-  border-radius:20px;
-  padding:15px;
+  border-radius:18px;
+  padding:10px 12px;      /* smaller */
   text-align:center;
 }
-.pomo-icons{
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
+
+.pomo h3{
+  margin:4px 0;
+  font-size:14px;
+  font-weight:600;
+}
+
+#pomoTime{
+  font-size:18px;         /* smaller */
+  margin:6px 0;
+}
+
+.pomo button{
+  padding:6px 14px;
+  font-size:12px;
+  border-radius:16px;
+  border:1px solid var(--blue);
+  background:transparent;
+  color:white;
   cursor:pointer;
 }
-audio{width:100%}
+
+/* AUDIO */
+audio{
+  width:100%;
+}
 
 /* MOBILE */
 @media(max-width:900px){
-  .app{grid-template-columns:1fr}
-  .level{flex-direction:row}
-  .level-bar{height:14px;width:200px}
+  .app{
+    grid-template-columns:1fr;
+  }
+  .level{
+    flex-direction:row;
+    justify-content:center;
+  }
+  .level-bar{
+    height:12px;
+    width:200px;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
 <!-- LEVEL -->
 <div class="level">
-  <div class="level-icons">📊 🏆</div>
-  <div class="level-bar"><div class="level-fill" id="levelFill"></div></div>
-  <small id="levelText">Lv 1 · Newbie</small>
+  <div class="level-bar">
+    <div class="level-fill" id="levelFill"></div>
+  </div>
+  <div class="level-text" id="levelText">Lv 1 · Newbie</div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
+
   <div class="title">FOCUS MODE</div>
 
   <div class="target">
@@ -173,16 +219,16 @@ audio{width:100%}
   </div>
 
   <div class="timer">
-    <div class="box" id="d">0D</div>
-    <div class="box" id="h">0H</div>
-    <div class="box" id="m">0M</div>
-    <div class="box" id="s">0S</div>
+    <div class="box" id="days">0D</div>
+    <div class="box" id="hours">0H</div>
+    <div class="box" id="mins">0M</div>
+    <div class="box" id="secs">0S</div>
   </div>
 
-  <div class="quote" id="quote"></div>
+  <div class="quote" id="quote">No zero days.</div>
 
-  <form class="search" action="https://google.com/search" target="_blank">
-    <input name="q" placeholder="Search Google...">
+  <form class="search" action="https://www.google.com/search" method="get" target="_blank">
+    <input type="text" name="q" placeholder="Search Google...">
   </form>
 
   <div class="buttons">
@@ -190,100 +236,91 @@ audio{width:100%}
     <a class="btn" href="https://open.spotify.com" target="_blank">Spotify</a>
   </div>
 
-  <!-- TASKS -->
-  <div class="tasks">
-    <input id="taskInput" placeholder="Add daily task & press Enter">
-    <div id="taskList"></div>
+  <div class="streak">
+    🔥 Streak: <span id="streak">3</span> days
   </div>
 
-  🔥 Streak: <span id="streak">3</span> days
 </div>
 
 <!-- RIGHT -->
 <div class="right">
+
+  <!-- SMALL POMODORO -->
   <div class="pomo">
-    <div class="pomo-icons">⚙️ ➕</div>
     <h3>Pomodoro</h3>
     <div id="pomoTime">25:00</div>
     <button onclick="startPomodoro()">Start</button>
   </div>
 
-  <audio controls>
-    <source src="ncs.mp3">
+  <audio id="bgm" controls>
+    <source src="ncs.mp3" type="audio/mpeg">
   </audio>
+
 </div>
 
 </div>
 
 <script>
-/* ===== BASIC LOGIC (CLEAN) ===== */
-let streak=Number(localStorage.streak)||3;
-streakEl.textContent=streak;
+/* ===== TARGET DATE ===== */
+let targetDate = localStorage.targetDate || "2026-02-23";
+datePicker.value = targetDate;
+datePicker.onchange = e=>{
+  targetDate = e.target.value;
+  localStorage.targetDate = targetDate;
+};
 
-let level=Math.min(100,Math.floor(streak/3)+1);
-levelFill.style.height=level+"%";
-levelText.textContent=`Lv ${level} · ${level<10?"Newbie":level<50?"Focused":"Legend"}`;
+/* ===== COUNTDOWN ===== */
+function updateTimer(){
+  const diff = new Date(targetDate) - new Date();
+  if(diff<=0) return;
+  days.textContent = Math.floor(diff/86400000)+"D";
+  hours.textContent = Math.floor(diff/3600000)%24+"H";
+  mins.textContent = Math.floor(diff/60000)%60+"M";
+  secs.textContent = Math.floor(diff/1000)%60+"S";
+}
+setInterval(updateTimer,1000);
+updateTimer();
 
-/* QUOTES */
+/* ===== QUOTES ===== */
 const quotes=[
-"Strength doesn’t come from what you can do. It comes from overcoming the things you once thought you couldn’t.",
 "No zero days.",
 "Discipline beats motivation.",
+"Prove them wrong.",
 "You started for a reason."
 ];
 let qi=0;
 setInterval(()=>{
-  quote.textContent=quotes[qi];
-  qi=(qi+1)%quotes.length;
+  quote.style.opacity=0;
+  setTimeout(()=>{
+    quote.textContent=quotes[qi];
+    quote.style.opacity=1;
+    qi=(qi+1)%quotes.length;
+  },300);
 },5000);
 
-/* TASKS */
-const tasks=JSON.parse(localStorage.tasks||"[]");
-function renderTasks(){
-  taskList.innerHTML="";
-  tasks.forEach((t,i)=>{
-    taskList.innerHTML+=`
-      <div class="task">
-        <input type="checkbox" ${t.done?"checked":""} onchange="toggleTask(${i})">
-        ${t.text}
-      </div>`;
-  });
-}
-function toggleTask(i){
-  tasks[i].done=!tasks[i].done;
-  localStorage.tasks=JSON.stringify(tasks);
-}
-taskInput.onkeydown=e=>{
-  if(e.key==="Enter"){
-    tasks.push({text:taskInput.value,done:false});
-    taskInput.value="";
-    localStorage.tasks=JSON.stringify(tasks);
-    renderTasks();
-  }
-};
-renderTasks();
+/* ===== STREAK + LEVEL ===== */
+let streak = Number(localStorage.streak)||3;
+streakEl.textContent = streak;
+let level = Math.min(100,Math.floor(streak/3)+1);
+levelFill.style.height = level+"%";
+levelText.textContent = `Lv ${level} · ${level<10?"Newbie":level<50?"Focused":"Legend"}`;
 
-/* TIMER */
-let target=new Date("2026-02-23");
-setInterval(()=>{
-  const diff=target-new Date();
-  d.textContent=Math.floor(diff/86400000)+"D";
-  h.textContent=Math.floor(diff/3600000)%24+"H";
-  m.textContent=Math.floor(diff/60000)%60+"M";
-  s.textContent=Math.floor(diff/1000)%60+"S";
-},1000);
-
-/* POMODORO */
+/* ===== POMODORO ===== */
 let pomoInt;
 function startPomodoro(){
-  let t=25*60;
+  let t = 25*60;
   clearInterval(pomoInt);
-  pomoInt=setInterval(()=>{
+  pomoInt = setInterval(()=>{
     t--;
-    pomoTime.textContent=
+    pomoTime.textContent =
       Math.floor(t/60)+":"+String(t%60).padStart(2,"0");
+    if(t<=0) clearInterval(pomoInt);
   },1000);
 }
+
+/* AUDIO */
+bgm.volume = 0.2;
 </script>
+
 </body>
 </html>
