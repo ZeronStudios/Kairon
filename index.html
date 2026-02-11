@@ -22,55 +22,85 @@ body{
   font-family:'Orbitron', sans-serif;
   color:white;
   background:
-    linear-gradient(90deg, rgba(76,201,255,.15) 1px, transparent 1px),
-    linear-gradient(rgba(155,92,255,.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,201,255,.12) 1px, transparent 1px),
+    linear-gradient(rgba(155,92,255,.12) 1px, transparent 1px),
     var(--bg);
   background-size:70px 70px;
   display:flex;
-  justify-content:center;
 }
 
-.container{
-  max-width:1000px;
+/* ===== LEFT LEVEL PANEL ===== */
+.level-panel{
+  width:110px;
+  padding:20px 10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+.level-title{
+  font-size:.7rem;
+  letter-spacing:.2em;
+  color:#8fdcff;
+}
+
+.level-bar{
+  height:260px;
+  width:14px;
+  background:#1b1435;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.level-fill{
   width:100%;
-  padding:40px 18px 140px;
-  text-align:center;
-  animation:splash 1s ease;
+  height:0%;
+  background:linear-gradient(180deg,var(--blue),var(--purple));
+  transition:.6s;
 }
 
-@keyframes splash{
-  from{opacity:0; transform:translateY(20px)}
-  to{opacity:1; transform:none}
+.level-text{
+  font-size:.75rem;
+  text-align:center;
+}
+
+/* ===== MAIN ===== */
+.container{
+  max-width:980px;
+  width:100%;
+  padding:35px 18px 120px;
+  text-align:center;
 }
 
 /* TITLE */
 .title{
-  font-size:clamp(2.6rem, 7vw, 5.2rem);
+  font-size:clamp(2.4rem,6vw,5rem);
   letter-spacing:.35em;
   color:var(--blue);
   text-shadow:0 0 30px rgba(76,201,255,.8);
-  margin-bottom:40px;
+  margin-bottom:30px;
 }
 
 /* TIMER */
 .timer{
   display:flex;
   justify-content:center;
-  gap:16px;
+  gap:14px;
   flex-wrap:wrap;
 }
 
 .box{
-  padding:14px 28px;
-  border-radius:40px;
+  padding:14px 26px;
+  border-radius:30px;
   border:1px solid var(--purple);
-  box-shadow:0 0 20px rgba(155,92,255,.4);
-  min-width:130px;
+  box-shadow:0 0 18px rgba(155,92,255,.35);
+  min-width:120px;
 }
 
 /* TARGET */
 .target-label{
-  margin-top:30px;
+  margin-top:28px;
   font-size:.8rem;
   letter-spacing:.2em;
   color:#8fdcff;
@@ -84,7 +114,6 @@ body{
   padding:12px 22px;
   border-radius:30px;
   font-family:'Orbitron', sans-serif;
-  outline:none;
 }
 #targetDate::-webkit-calendar-picker-indicator{
   filter:invert(1);
@@ -92,15 +121,13 @@ body{
 
 /* STREAK */
 .streak{
-  margin-top:25px;
-  font-size:1rem;
+  margin-top:22px;
   color:#ffda79;
-  text-shadow:0 0 15px rgba(255,218,121,.6);
 }
 
 /* PROGRESS BAR */
 .progress-wrap{
-  margin:25px auto;
+  margin:22px auto;
   max-width:420px;
 }
 .progress{
@@ -114,95 +141,69 @@ body{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,var(--blue),var(--purple));
-  transition:.6s;
 }
 
 /* QUOTE */
 .quote{
-  margin:35px auto;
+  margin:30px auto;
   max-width:760px;
   font-size:1.05rem;
   color:#d7d3ff;
   min-height:2.4em;
 }
 
-/* SEARCH */
-.search input{
-  width:320px;
-  padding:15px;
-  border-radius:35px;
-  border:none;
-  font-size:16px;
-}
-
-/* BUTTONS */
-.buttons{
-  margin-top:25px;
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-}
-
-.btn{
-  padding:13px 34px;
-  border-radius:30px;
-  border:1px solid var(--blue);
-  background:transparent;
-  color:white;
-  cursor:pointer;
-  transition:.3s;
-  text-decoration:none;
-}
-.btn:hover{
-  box-shadow:0 0 25px rgba(76,201,255,.7);
-  transform:translateY(-3px);
-}
-
 /* DAY TRACKER */
 .day-section{
-  margin-top:60px;
-  text-align:left;
+  margin-top:50px;
 }
 
 .day-title{
-  text-align:center;
   letter-spacing:.25em;
-  margin-bottom:25px;
+  margin-bottom:20px;
   color:#9bdeff;
 }
 
 .days{
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
-  gap:18px;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:16px;
 }
 
 .day{
-  padding:16px;
+  padding:14px;
   border-radius:18px;
   border:1px solid var(--purple);
-  box-shadow:0 0 18px rgba(155,92,255,.35);
   cursor:pointer;
   display:flex;
   justify-content:space-between;
 }
-
 .day.done{
   opacity:.45;
   text-decoration:line-through;
 }
 
-/* MOBILE EXTRA */
-@media(max-width:600px){
-  body{background-size:45px 45px}
-  .search input{width:100%}
-  .box{min-width:110px}
+/* MOBILE */
+@media(max-width:700px){
+  body{flex-direction:column}
+  .level-panel{
+    width:100%;
+    flex-direction:row;
+    justify-content:center;
+  }
+  .level-bar{height:14px;width:200px}
 }
 </style>
 </head>
 
 <body>
+
+<!-- LEVEL PANEL -->
+<div class="level-panel">
+  <div class="level-title">LEVEL</div>
+  <div class="level-bar"><div class="level-fill" id="levelFill"></div></div>
+  <div class="level-text" id="levelText">Lvl 1<br>Newbie</div>
+</div>
+
 <div class="container">
 
 <div class="title">FOCUS MODE</div>
@@ -225,42 +226,82 @@ body{
 
 <div class="quote" id="quote"></div>
 
-<form class="search" action="https://www.google.com/search" method="get" target="_blank">
-  <input type="text" name="q" placeholder="Search Google...">
-</form>
-
-<div class="buttons">
-  <a class="btn" href="https://www.youtube.com" target="_blank">YouTube</a>
-  <a class="btn" href="https://open.spotify.com" target="_blank">Spotify</a>
-</div>
-
 <div class="day-section">
-  <div class="day-title">DAY PROGRESS</div>
+  <div class="day-title">DAY TRACKER</div>
   <div class="days" id="daysList"></div>
 </div>
 
 </div>
 
 <script>
-/* TARGET DATE */
-const input=document.getElementById("targetDate");
-let saved=localStorage.getItem("targetDate");
-let target=saved?new Date(saved):new Date("2026-02-23T00:00:00");
-input.value=target.toISOString().split("T")[0];
-input.onchange=()=>{localStorage.setItem("targetDate",input.value);target=new Date(input.value)};
+/* ===== DATA ===== */
+let completed = JSON.parse(localStorage.getItem("completedDays"))||[];
+let streak = Number(localStorage.getItem("streak"))||0;
 
-/* TIMER */
-function updateTimer(){
+/* ===== TARGET DATE ===== */
+const input=document.getElementById("targetDate");
+let target=new Date(localStorage.getItem("targetDate")||"2026-02-23");
+input.value=target.toISOString().split("T")[0];
+input.onchange=()=>{
+ localStorage.setItem("targetDate",input.value);
+ target=new Date(input.value);
+};
+
+/* ===== TIMER ===== */
+setInterval(()=>{
  const diff=target-new Date();
  if(diff<=0)return;
  days.innerText=Math.floor(diff/86400000)+" Days";
  hours.innerText=Math.floor(diff/3600000)%24+" Hours";
  mins.innerText=Math.floor(diff/60000)%60+" Min";
  secs.innerText=Math.floor(diff/1000)%60+" Sec";
-}
-setInterval(updateTimer,1000);updateTimer();
+},1000);
 
-/* QUOTES */
+/* ===== LEVEL SYSTEM ===== */
+function updateLevel(){
+ const xp=completed.length;
+ const lvl=Math.min(100,Math.floor(xp/1)+1);
+ let title="Newbie";
+ if(lvl>10)title="Learner";
+ if(lvl>25)title="Grinder";
+ if(lvl>50)title="Warrior";
+ if(lvl>75)title="Master";
+ if(lvl===100)title="LEGEND 👑";
+ levelText.innerHTML=`Lvl ${lvl}<br>${title}`;
+ levelFill.style.height=(lvl)+"%";
+}
+updateLevel();
+
+/* ===== DAYS ===== */
+function renderDays(){
+ daysList.innerHTML="";
+ for(let i=1;i<=completed.length+1;i++){
+  const d=document.createElement("div");
+  const done=completed.includes(i);
+  d.className="day"+(done?" done":"");
+  d.innerHTML=`Day ${i} <span>${done?"✖":"✔"}</span>`;
+  d.onclick=()=>{
+    if(done){
+      completed=completed.filter(x=>x!==i);
+      streak--;
+    }else{
+      completed.push(i);
+      streak++;
+    }
+    localStorage.setItem("completedDays",JSON.stringify(completed));
+    localStorage.setItem("streak",streak);
+    streakEl.innerText="🔥 Streak: "+streak+" days";
+    updateLevel();
+    renderDays();
+  };
+  daysList.appendChild(d);
+ }
+}
+const streakEl=document.getElementById("streak");
+streakEl.innerText="🔥 Streak: "+streak+" days";
+renderDays();
+
+/* ===== QUOTES ===== */
 const quotes=[
 "Strength doesn’t come from what you can do. It comes from overcoming the things you once thought you couldn’t.",
 "Discipline beats motivation.",
@@ -269,50 +310,11 @@ const quotes=[
 "You didn’t come this far to stop."
 ];
 let qi=0;
-setInterval(()=>{quote.style.opacity=0;setTimeout(()=>{quote.innerText=quotes[qi];quote.style.opacity=1;qi=(qi+1)%quotes.length},400)},5000);
+setInterval(()=>{
+ quote.innerText=quotes[qi];
+ qi=(qi+1)%quotes.length;
+},5000);
 quote.innerText=quotes[0];
-
-/* DAY + STREAK */
-const daysList=document.getElementById("daysList");
-let currentDay=Number(localStorage.getItem("currentDay"))||1;
-let streak=Number(localStorage.getItem("streak"))||0;
-let last=localStorage.getItem("lastDay");
-
-function updateStreak(){
- const today=new Date().toDateString();
- if(last!==today){streak++;localStorage.setItem("streak",streak);localStorage.setItem("lastDay",today)}
- streakEl.innerText="🔥 Streak: "+streak+" days";
-}
-const streakEl=document.getElementById("streak");
-streakEl.innerText="🔥 Streak: "+streak+" days";
-
-/* PROGRESS BAR */
-function updateBar(){
- const start=new Date("2026-01-01");
- const total=target-start;
- const done=new Date()-start;
- bar.style.width=Math.min(100,(done/total)*100)+"%";
-}
-updateBar();
-
-function renderDays(){
- daysList.innerHTML="";
- for(let i=1;i<=currentDay;i++){
-  const d=document.createElement("div");
-  d.className="day"+(i<currentDay?" done":"");
-  d.innerHTML=`Day ${i} <span>✔</span>`;
-  d.onclick=()=>{
-    if(i===currentDay){
-      currentDay++;
-      localStorage.setItem("currentDay",currentDay);
-      updateStreak();
-      renderDays();
-    }
-  };
-  daysList.appendChild(d);
- }
-}
-renderDays();
 </script>
 
 </body>
