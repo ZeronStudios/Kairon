@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root{
@@ -13,128 +14,64 @@
   --purple:#9b5cff;
   --bg:#050014;
 }
-
 *{box-sizing:border-box}
-
 body{
   margin:0;
-  min-height:100vh;
-  font-family:'Orbitron', sans-serif;
+  font-family:'Orbitron',sans-serif;
   color:white;
   background:
     linear-gradient(90deg, rgba(76,201,255,.12) 1px, transparent 1px),
     linear-gradient(rgba(155,92,255,.12) 1px, transparent 1px),
     var(--bg);
   background-size:70px 70px;
-  display:flex;
 }
-
-/* ===== LEFT LEVEL PANEL ===== */
-.level-panel{
-  width:110px;
-  padding:20px 10px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-
-.level-title{
-  font-size:.7rem;
-  letter-spacing:.2em;
-  color:#8fdcff;
-}
-
-.level-bar{
-  height:260px;
-  width:14px;
-  background:#1b1435;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.level-fill{
-  width:100%;
-  height:0%;
-  background:linear-gradient(180deg,var(--blue),var(--purple));
-  transition:.6s;
-}
-
-.level-text{
-  font-size:.75rem;
-  text-align:center;
-}
-
-/* ===== MAIN ===== */
 .container{
-  max-width:980px;
-  width:100%;
-  padding:35px 18px 120px;
+  max-width:1000px;
+  margin:auto;
+  padding:30px 16px 120px;
   text-align:center;
 }
-
-/* TITLE */
 .title{
-  font-size:clamp(2.4rem,6vw,5rem);
-  letter-spacing:.35em;
+  font-size:clamp(2.5rem,6vw,5rem);
+  letter-spacing:.3em;
   color:var(--blue);
   text-shadow:0 0 30px rgba(76,201,255,.8);
-  margin-bottom:30px;
 }
-
-/* TIMER */
 .timer{
   display:flex;
   justify-content:center;
-  gap:14px;
+  gap:12px;
   flex-wrap:wrap;
+  margin:30px 0;
 }
-
 .box{
   padding:14px 26px;
   border-radius:30px;
   border:1px solid var(--purple);
-  box-shadow:0 0 18px rgba(155,92,255,.35);
   min-width:120px;
 }
-
-/* TARGET */
 .target-label{
-  margin-top:28px;
-  font-size:.8rem;
   letter-spacing:.2em;
   color:#8fdcff;
+  margin-top:20px;
 }
-
 #targetDate{
-  margin-top:10px;
+  margin-top:8px;
+  padding:12px 22px;
+  border-radius:30px;
   background:transparent;
   color:white;
   border:1px solid var(--blue);
-  padding:12px 22px;
-  border-radius:30px;
-  font-family:'Orbitron', sans-serif;
 }
-#targetDate::-webkit-calendar-picker-indicator{
-  filter:invert(1);
-}
-
-/* STREAK */
-.streak{
-  margin-top:22px;
-  color:#ffda79;
-}
-
-/* PROGRESS BAR */
-.progress-wrap{
-  margin:22px auto;
-  max-width:420px;
-}
+#targetDate::-webkit-calendar-picker-indicator{filter:invert(1)}
+.streak{margin-top:18px;color:#ffda79}
 .progress{
   height:12px;
   background:#1b1435;
   border-radius:20px;
   overflow:hidden;
+  max-width:420px;
+  margin:16px auto;
 }
 .progress span{
   display:block;
@@ -142,33 +79,18 @@ body{
   width:0%;
   background:linear-gradient(90deg,var(--blue),var(--purple));
 }
-
-/* QUOTE */
 .quote{
   margin:30px auto;
   max-width:760px;
-  font-size:1.05rem;
-  color:#d7d3ff;
   min-height:2.4em;
+  color:#d7d3ff;
 }
-
-/* DAY TRACKER */
-.day-section{
-  margin-top:50px;
-}
-
-.day-title{
-  letter-spacing:.25em;
-  margin-bottom:20px;
-  color:#9bdeff;
-}
-
 .days{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
   gap:16px;
+  margin-top:30px;
 }
-
 .day{
   padding:14px;
   border-radius:18px;
@@ -177,33 +99,47 @@ body{
   display:flex;
   justify-content:space-between;
 }
-.day.done{
-  opacity:.45;
-  text-decoration:line-through;
+.day.done{opacity:.45;text-decoration:line-through}
+.day.locked{opacity:.25;cursor:not-allowed}
+
+/* ACHIEVEMENTS */
+.badges{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:30px;
+}
+.badge{
+  padding:10px 18px;
+  border-radius:20px;
+  border:1px solid var(--blue);
+  opacity:.35;
+}
+.badge.unlocked{
+  opacity:1;
+  box-shadow:0 0 18px rgba(76,201,255,.6);
 }
 
-/* MOBILE */
-@media(max-width:700px){
-  body{flex-direction:column}
-  .level-panel{
-    width:100%;
-    flex-direction:row;
-    justify-content:center;
-  }
-  .level-bar{height:14px;width:200px}
+/* CHART */
+.chart-wrap{
+  max-width:500px;
+  margin:30px auto;
+  display:none;
+}
+.toggle-btn{
+  margin-top:20px;
+  padding:10px 26px;
+  border-radius:30px;
+  background:transparent;
+  border:1px solid var(--blue);
+  color:white;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
-
-<!-- LEVEL PANEL -->
-<div class="level-panel">
-  <div class="level-title">LEVEL</div>
-  <div class="level-bar"><div class="level-fill" id="levelFill"></div></div>
-  <div class="level-text" id="levelText">Lvl 1<br>Newbie</div>
-</div>
-
 <div class="container">
 
 <div class="title">FOCUS MODE</div>
@@ -220,25 +156,34 @@ body{
 
 <div class="streak" id="streak">🔥 Streak: 0 days</div>
 
-<div class="progress-wrap">
-  <div class="progress"><span id="bar"></span></div>
-</div>
+<div class="progress"><span id="bar"></span></div>
 
 <div class="quote" id="quote"></div>
 
-<div class="day-section">
-  <div class="day-title">DAY TRACKER</div>
-  <div class="days" id="daysList"></div>
+<div class="badges">
+  <div class="badge" id="b1">🏁 Starter</div>
+  <div class="badge" id="b7">🔥 Consistent</div>
+  <div class="badge" id="b30">💪 Disciplined</div>
+  <div class="badge" id="b100">👑 Legend</div>
 </div>
+
+<button class="toggle-btn" onclick="toggleChart()">📊 Toggle Graph</button>
+
+<div class="chart-wrap" id="chartWrap">
+  <canvas id="chart"></canvas>
+</div>
+
+<div class="days" id="daysList"></div>
 
 </div>
 
 <script>
 /* ===== DATA ===== */
-let completed = JSON.parse(localStorage.getItem("completedDays"))||[];
-let streak = Number(localStorage.getItem("streak"))||0;
+let completed = JSON.parse(localStorage.getItem("completedDays")) || [];
+const streakEl=document.getElementById("streak");
+const bar=document.getElementById("bar");
 
-/* ===== TARGET DATE ===== */
+/* ===== TARGET ===== */
 const input=document.getElementById("targetDate");
 let target=new Date(localStorage.getItem("targetDate")||"2026-02-23");
 input.value=target.toISOString().split("T")[0];
@@ -257,49 +202,49 @@ setInterval(()=>{
  secs.innerText=Math.floor(diff/1000)%60+" Sec";
 },1000);
 
-/* ===== LEVEL SYSTEM ===== */
-function updateLevel(){
- const xp=completed.length;
- const lvl=Math.min(100,Math.floor(xp/1)+1);
- let title="Newbie";
- if(lvl>10)title="Learner";
- if(lvl>25)title="Grinder";
- if(lvl>50)title="Warrior";
- if(lvl>75)title="Master";
- if(lvl===100)title="LEGEND 👑";
- levelText.innerHTML=`Lvl ${lvl}<br>${title}`;
- levelFill.style.height=(lvl)+"%";
-}
-updateLevel();
+/* ===== STREAK + PROGRESS ===== */
+function updateStats(){
+ const streak=completed.length;
+ streakEl.innerText="🔥 Streak: "+streak+" days";
+ bar.style.width=Math.min(100,streak)+"%";
 
-/* ===== DAYS ===== */
+ if(streak>=1)b1.classList.add("unlocked");
+ if(streak>=7)b7.classList.add("unlocked");
+ if(streak>=30)b30.classList.add("unlocked");
+ if(streak>=100)b100.classList.add("unlocked");
+
+ localStorage.setItem("completedDays",JSON.stringify(completed));
+}
+
+/* ===== DAYS (ONLY TODAY ALLOWED) ===== */
 function renderDays(){
  daysList.innerHTML="";
- for(let i=1;i<=completed.length+1;i++){
-  const d=document.createElement("div");
+ const todayIndex=completed.length+1;
+
+ for(let i=1;i<=todayIndex+2;i++){
   const done=completed.includes(i);
-  d.className="day"+(done?" done":"");
+  const isToday=i===todayIndex;
+  const future=i>todayIndex;
+  const d=document.createElement("div");
+
+  d.className="day"+(done?" done":"")+(future?" locked":"");
   d.innerHTML=`Day ${i} <span>${done?"✖":"✔"}</span>`;
+
   d.onclick=()=>{
+    if(future)return;
     if(done){
       completed=completed.filter(x=>x!==i);
-      streak--;
     }else{
+      if(!isToday)return;
       completed.push(i);
-      streak++;
     }
-    localStorage.setItem("completedDays",JSON.stringify(completed));
-    localStorage.setItem("streak",streak);
-    streakEl.innerText="🔥 Streak: "+streak+" days";
-    updateLevel();
+    updateStats();
     renderDays();
+    updateChart();
   };
   daysList.appendChild(d);
  }
 }
-const streakEl=document.getElementById("streak");
-streakEl.innerText="🔥 Streak: "+streak+" days";
-renderDays();
 
 /* ===== QUOTES ===== */
 const quotes=[
@@ -310,11 +255,40 @@ const quotes=[
 "You didn’t come this far to stop."
 ];
 let qi=0;
-setInterval(()=>{
- quote.innerText=quotes[qi];
- qi=(qi+1)%quotes.length;
-},5000);
 quote.innerText=quotes[0];
+setInterval(()=>{
+ qi=(qi+1)%quotes.length;
+ quote.innerText=quotes[qi];
+},5000);
+
+/* ===== CHART ===== */
+let chart;
+function updateChart(){
+ const ctx=document.getElementById("chart");
+ if(chart)chart.destroy();
+ chart=new Chart(ctx,{
+  type:"line",
+  data:{
+   labels:completed.map(d=>"Day "+d),
+   datasets:[{
+    label:"Progress",
+    data:completed.map((_,i)=>i+1),
+    borderColor:"#4cc9ff",
+    tension:.3
+   }]
+  },
+  options:{plugins:{legend:{display:false}}}
+ });
+}
+function toggleChart(){
+ const w=document.getElementById("chartWrap");
+ w.style.display=w.style.display==="block"?"none":"block";
+ updateChart();
+}
+
+/* INIT */
+updateStats();
+renderDays();
 </script>
 
 </body>
