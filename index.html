@@ -17,61 +17,98 @@
 *{box-sizing:border-box}
 body{
   margin:0;
+  min-height:100vh;
   font-family:'Orbitron',sans-serif;
   color:white;
   background:
-    linear-gradient(90deg, rgba(76,201,255,.12) 1px, transparent 1px),
-    linear-gradient(rgba(155,92,255,.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,201,255,.15) 1px, transparent 1px),
+    linear-gradient(rgba(155,92,255,.15) 1px, transparent 1px),
     var(--bg);
   background-size:70px 70px;
+  display:flex;
+  justify-content:center;
 }
 .container{
-  max-width:1000px;
-  margin:auto;
-  padding:30px 16px 120px;
+  max-width:900px;
+  width:100%;
+  padding:40px 18px 120px;
   text-align:center;
 }
+
+/* TITLE */
 .title{
-  font-size:clamp(2.5rem,6vw,5rem);
+  font-size:clamp(2.5rem,7vw,5rem);
   letter-spacing:.3em;
   color:var(--blue);
-  text-shadow:0 0 30px rgba(76,201,255,.8);
+  text-shadow:0 0 25px rgba(76,201,255,.7);
 }
+
+/* TIMER */
 .timer{
   display:flex;
   justify-content:center;
-  gap:12px;
-  flex-wrap:wrap;
-  margin:30px 0;
+  gap:20px;
+  margin:35px 0;
 }
 .box{
   padding:14px 26px;
   border-radius:30px;
   border:1px solid var(--purple);
-  min-width:120px;
+  box-shadow:0 0 18px rgba(155,92,255,.35);
 }
-.target-label{
-  letter-spacing:.2em;
-  color:#8fdcff;
-  margin-top:20px;
+
+/* LEVEL + GRAPH TOGGLE */
+.level-row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  margin-top:25px;
 }
-#targetDate{
-  margin-top:8px;
-  padding:12px 22px;
-  border-radius:30px;
+.level{
+  color:#ffda79;
+}
+.graph-btn{
+  padding:6px 14px;
+  border-radius:20px;
+  border:1px solid var(--blue);
   background:transparent;
   color:white;
+  cursor:pointer;
+}
+
+/* TARGET */
+.target-label{
+  margin-top:30px;
+  font-size:.75rem;
+  letter-spacing:.35em;
+  color:#cfd9ff;
+}
+#targetDate{
+  margin-top:10px;
+  padding:12px 26px;
+  border-radius:30px;
   border:1px solid var(--blue);
+  background:transparent;
+  color:white;
+  font-family:'Orbitron',sans-serif;
 }
 #targetDate::-webkit-calendar-picker-indicator{filter:invert(1)}
-.streak{margin-top:18px;color:#ffda79}
+
+/* STREAK */
+.streak{
+  margin-top:20px;
+  color:#ffda79;
+}
+
+/* PROGRESS BAR */
 .progress{
+  margin:20px auto;
+  max-width:420px;
   height:12px;
   background:#1b1435;
   border-radius:20px;
   overflow:hidden;
-  max-width:420px;
-  margin:16px auto;
 }
 .progress span{
   display:block;
@@ -79,46 +116,38 @@ body{
   width:0%;
   background:linear-gradient(90deg,var(--blue),var(--purple));
 }
+
+/* QUOTE */
 .quote{
-  margin:30px auto;
-  max-width:760px;
-  min-height:2.4em;
+  font-size:1.1rem;
+  margin:35px auto;
   color:#d7d3ff;
+  min-height:1.4em;
 }
+
+/* DAYS */
 .days{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-  gap:16px;
-  margin-top:30px;
+  gap:18px;
+  margin-top:40px;
 }
 .day{
-  padding:14px;
+  padding:16px;
   border-radius:18px;
   border:1px solid var(--purple);
+  box-shadow:0 0 18px rgba(155,92,255,.35);
   cursor:pointer;
   display:flex;
   justify-content:space-between;
 }
-.day.done{opacity:.45;text-decoration:line-through}
-.day.locked{opacity:.25;cursor:not-allowed}
-
-/* ACHIEVEMENTS */
-.badges{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-top:30px;
+.day.done{
+  opacity:.45;
+  text-decoration:line-through;
 }
-.badge{
-  padding:10px 18px;
-  border-radius:20px;
-  border:1px solid var(--blue);
-  opacity:.35;
-}
-.badge.unlocked{
-  opacity:1;
-  box-shadow:0 0 18px rgba(76,201,255,.6);
+.day.locked{
+  opacity:.25;
+  cursor:not-allowed;
 }
 
 /* CHART */
@@ -126,15 +155,6 @@ body{
   max-width:500px;
   margin:30px auto;
   display:none;
-}
-.toggle-btn{
-  margin-top:20px;
-  padding:10px 26px;
-  border-radius:30px;
-  background:transparent;
-  border:1px solid var(--blue);
-  color:white;
-  cursor:pointer;
 }
 </style>
 </head>
@@ -151,7 +171,12 @@ body{
   <div class="box" id="secs">0 Sec</div>
 </div>
 
-<div class="target-label">🎯 SET YOUR TARGET</div>
+<div class="level-row">
+  <div class="level" id="level">Level 1 · Newbie</div>
+  <button class="graph-btn" onclick="toggleGraph()">📊</button>
+</div>
+
+<div class="target-label">SET TARGET</div>
 <input type="date" id="targetDate">
 
 <div class="streak" id="streak">🔥 Streak: 0 days</div>
@@ -159,15 +184,6 @@ body{
 <div class="progress"><span id="bar"></span></div>
 
 <div class="quote" id="quote"></div>
-
-<div class="badges">
-  <div class="badge" id="b1">🏁 Starter</div>
-  <div class="badge" id="b7">🔥 Consistent</div>
-  <div class="badge" id="b30">💪 Disciplined</div>
-  <div class="badge" id="b100">👑 Legend</div>
-</div>
-
-<button class="toggle-btn" onclick="toggleChart()">📊 Toggle Graph</button>
 
 <div class="chart-wrap" id="chartWrap">
   <canvas id="chart"></canvas>
@@ -180,17 +196,12 @@ body{
 <script>
 /* ===== DATA ===== */
 let completed = JSON.parse(localStorage.getItem("completedDays")) || [];
-const streakEl=document.getElementById("streak");
-const bar=document.getElementById("bar");
 
 /* ===== TARGET ===== */
 const input=document.getElementById("targetDate");
 let target=new Date(localStorage.getItem("targetDate")||"2026-02-23");
 input.value=target.toISOString().split("T")[0];
-input.onchange=()=>{
- localStorage.setItem("targetDate",input.value);
- target=new Date(input.value);
-};
+input.onchange=()=>{localStorage.setItem("targetDate",input.value);target=new Date(input.value)};
 
 /* ===== TIMER ===== */
 setInterval(()=>{
@@ -202,40 +213,44 @@ setInterval(()=>{
  secs.innerText=Math.floor(diff/1000)%60+" Sec";
 },1000);
 
-/* ===== STREAK + PROGRESS ===== */
+/* ===== STATS ===== */
 function updateStats(){
  const streak=completed.length;
  streakEl.innerText="🔥 Streak: "+streak+" days";
  bar.style.width=Math.min(100,streak)+"%";
 
- if(streak>=1)b1.classList.add("unlocked");
- if(streak>=7)b7.classList.add("unlocked");
- if(streak>=30)b30.classList.add("unlocked");
- if(streak>=100)b100.classList.add("unlocked");
+ const lvl=Math.min(100,streak+1);
+ let title="Newbie";
+ if(lvl>10)title="Learner";
+ if(lvl>25)title="Grinder";
+ if(lvl>50)title="Warrior";
+ if(lvl>75)title="Master";
+ if(lvl===100)title="Legend 👑";
+ level.innerText=`Level ${lvl} · ${title}`;
 
  localStorage.setItem("completedDays",JSON.stringify(completed));
 }
 
-/* ===== DAYS (ONLY TODAY ALLOWED) ===== */
+/* ===== DAY LOGIC (FIXED) ===== */
 function renderDays(){
  daysList.innerHTML="";
- const todayIndex=completed.length+1;
+ let today = 1;
+ while(completed.includes(today)) today++;
 
- for(let i=1;i<=todayIndex+2;i++){
-  const done=completed.includes(i);
-  const isToday=i===todayIndex;
-  const future=i>todayIndex;
+ for(let i=1;i<=today+2;i++){
+  const done = completed.includes(i);
+  const future = i > today;
   const d=document.createElement("div");
 
   d.className="day"+(done?" done":"")+(future?" locked":"");
   d.innerHTML=`Day ${i} <span>${done?"✖":"✔"}</span>`;
 
   d.onclick=()=>{
-    if(future)return;
+    if(future) return;
     if(done){
-      completed=completed.filter(x=>x!==i);
+      completed = completed.filter(x=>x!==i);
     }else{
-      if(!isToday)return;
+      if(i!==today) return;
       completed.push(i);
     }
     updateStats();
@@ -251,27 +266,22 @@ const quotes=[
 "Strength doesn’t come from what you can do. It comes from overcoming the things you once thought you couldn’t.",
 "Discipline beats motivation.",
 "No zero days.",
-"Prove them wrong.",
-"You didn’t come this far to stop."
+"Prove them wrong."
 ];
 let qi=0;
 quote.innerText=quotes[0];
-setInterval(()=>{
- qi=(qi+1)%quotes.length;
- quote.innerText=quotes[qi];
-},5000);
+setInterval(()=>{qi=(qi+1)%quotes.length;quote.innerText=quotes[qi]},5000);
 
-/* ===== CHART ===== */
+/* ===== GRAPH ===== */
 let chart;
 function updateChart(){
  const ctx=document.getElementById("chart");
- if(chart)chart.destroy();
+ if(chart) chart.destroy();
  chart=new Chart(ctx,{
   type:"line",
   data:{
    labels:completed.map(d=>"Day "+d),
    datasets:[{
-    label:"Progress",
     data:completed.map((_,i)=>i+1),
     borderColor:"#4cc9ff",
     tension:.3
@@ -280,13 +290,14 @@ function updateChart(){
   options:{plugins:{legend:{display:false}}}
  });
 }
-function toggleChart(){
- const w=document.getElementById("chartWrap");
+function toggleGraph(){
+ const w=chartWrap;
  w.style.display=w.style.display==="block"?"none":"block";
  updateChart();
 }
 
 /* INIT */
+const streakEl=document.getElementById("streak");
 updateStats();
 renderDays();
 </script>
